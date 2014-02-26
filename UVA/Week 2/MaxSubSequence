@@ -1,0 +1,32 @@
+import java.io.*;
+import java.util.*;
+
+public class MaxSubSequence {
+	
+	public static int[] sequence = new int[100];
+
+	public static void main(String[] args) throws Exception {
+	
+		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+		String line;
+	
+		int currNum;
+		int ind;
+		StringTokenizer st;
+		StringBuilder sb = new StringBuilder();
+		
+		while ((line = input.readLine()) != null) {
+			
+			st = new StringTokenizer(line);
+			ind = 0;
+			while (st.hasMoreTokens()) {
+				currNum = Integer.parseInt(st.nextToken());
+				if (currNum != -999999) {
+					sequence[ind] = currNum;
+				}
+				sb.append(sequence.toString());
+			}	
+			sb.append("\n");
+		}
+	}
+}

@@ -1,0 +1,489 @@
+JAVA PROFILE 1.0.1, created Thu Feb  6 19:08:59 2014
+
+Header for -agentlib:hprof (or -Xrunhprof) ASCII Output (JDK 5.0 JVMTI based)
+
+%W% %E%
+
+ Copyright (c) 2006 Sun Microsystems, Inc. All  Rights Reserved.
+
+WARNING!  This file format is under development, and is subject to
+change without notice.
+
+This file contains the following types of records:
+
+THREAD START
+THREAD END      mark the lifetime of Java threads
+
+TRACE           represents a Java stack trace.  Each trace consists
+                of a series of stack frames.  Other records refer to
+                TRACEs to identify (1) where object allocations have
+                taken place, (2) the frames in which GC roots were
+                found, and (3) frequently executed methods.
+
+HEAP DUMP       is a complete snapshot of all live objects in the Java
+                heap.  Following distinctions are made:
+
+                ROOT    root set as determined by GC
+                CLS     classes 
+                OBJ     instances
+                ARR     arrays
+
+SITES           is a sorted list of allocation sites.  This identifies
+                the most heavily allocated object types, and the TRACE
+                at which those allocations occurred.
+
+CPU SAMPLES     is a statistical profile of program execution.  The VM
+                periodically samples all running threads, and assigns
+                a quantum to active TRACEs in those threads.  Entries
+                in this record are TRACEs ranked by the percentage of
+                total quanta they consumed; top-ranked TRACEs are
+                typically hot spots in the program.
+
+CPU TIME        is a profile of program execution obtained by measuring
+                the time spent in individual methods (excluding the time
+                spent in callees), as well as by counting the number of
+                times each method is called. Entries in this record are
+                TRACEs ranked by the percentage of total CPU time. The
+                "count" field indicates the number of times each TRACE 
+                is invoked.
+
+MONITOR TIME    is a profile of monitor contention obtained by measuring
+                the time spent by a thread waiting to enter a monitor.
+                Entries in this record are TRACEs ranked by the percentage
+                of total monitor contention time and a brief description
+                of the monitor.  The "count" field indicates the number of 
+                times the monitor was contended at that TRACE.
+
+MONITOR DUMP    is a complete snapshot of all the monitors and threads in 
+                the System.
+
+HEAP DUMP, SITES, CPU SAMPLES|TIME and MONITOR DUMP|TIME records are generated 
+at program exit.  They can also be obtained during program execution by typing 
+Ctrl-\ (on Solaris) or by typing Ctrl-Break (on Win32).
+
+--------
+
+THREAD START (obj=50000153, id = 200001, name="main", group="main")
+THREAD START (obj=50000270, id = 200005, name="Thread-1", group="main")
+THREAD END (id = 200005)
+THREAD END (id = 200001)
+THREAD START (obj=5000027a, id = 200006, name="DestroyJavaVM", group="main")
+THREAD END (id = 200006)
+TRACE 300286:
+	java.io.FileOutputStream.writeBytes(FileOutputStream.java:Unknown line)
+	java.io.FileOutputStream.write(FileOutputStream.java:282)
+	java.io.BufferedOutputStream.write(BufferedOutputStream.java:105)
+	java.io.PrintStream.write(PrintStream.java:430)
+TRACE 300246:
+	java.lang.Object.getClass(Object.java:Unknown line)
+	java.util.Arrays.copyOf(Arrays.java:2734)
+	java.util.ArrayList.ensureCapacity(ArrayList.java:167)
+	java.util.ArrayList.add(ArrayList.java:351)
+TRACE 300230:
+	java.util.ArrayList.<init>(ArrayList.java:112)
+	java.util.ArrayList.<init>(ArrayList.java:119)
+	K_Occurrence.main(K_Occurrence.java:18)
+TRACE 300264:
+	java.lang.String.<init>(String.java:215)
+	java.io.BufferedReader.readLine(BufferedReader.java:331)
+	java.io.BufferedReader.readLine(BufferedReader.java:362)
+	K_Occurrence.main(K_Occurrence.java:58)
+TRACE 300257:
+	K_Occurrence.main(K_Occurrence.java:53)
+TRACE 300259:
+	java.lang.String.indexOf(String.java:1521)
+	java.util.StringTokenizer.skipDelimiters(StringTokenizer.java:235)
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:324)
+	K_Occurrence.main(K_Occurrence.java:59)
+TRACE 300263:
+	java.lang.System.arraycopy(System.java:Unknown line)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:516)
+	java.lang.StringBuffer.append(StringBuffer.java:306)
+	java.io.BufferedReader.readLine(BufferedReader.java:345)
+TRACE 300258:
+	java.util.StringTokenizer.setMaxDelimCodePoint(StringTokenizer.java:134)
+	java.util.StringTokenizer.<init>(StringTokenizer.java:185)
+	java.util.StringTokenizer.<init>(StringTokenizer.java:219)
+	K_Occurrence.main(K_Occurrence.java:58)
+TRACE 300280:
+	java.lang.Integer.parseInt(Integer.java:499)
+	K_Occurrence.main(K_Occurrence.java:60)
+TRACE 300281:
+	java.util.StringTokenizer.skipDelimiters(StringTokenizer.java:238)
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:324)
+	K_Occurrence.main(K_Occurrence.java:59)
+TRACE 300260:
+	java.nio.Buffer.position(Buffer.java:215)
+	sun.nio.cs.SingleByteDecoder.decodeArrayLoop(SingleByteDecoder.java:56)
+	sun.nio.cs.SingleByteDecoder.decodeLoop(SingleByteDecoder.java:83)
+	java.nio.charset.CharsetDecoder.decode(CharsetDecoder.java:544)
+TRACE 300234:
+	K_Occurrence.main(K_Occurrence.java:18)
+TRACE 300256:
+	java.lang.Integer.toString(Integer.java:310)
+	java.lang.Integer.toString(Integer.java:118)
+	java.lang.String.valueOf(String.java:2931)
+	java.lang.Integer.toString(Integer.java:722)
+TRACE 300271:
+	K_Occurrence.main(K_Occurrence.java:58)
+TRACE 300266:
+	java.util.Arrays.copyOf(Arrays.java:2882)
+	java.lang.AbstractStringBuilder.expandCapacity(AbstractStringBuilder.java:100)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:390)
+	java.lang.StringBuilder.append(StringBuilder.java:119)
+TRACE 300251:
+	K_Occurrence.main(K_Occurrence.java:70)
+TRACE 300252:
+	java.util.StringTokenizer.scanToken(StringTokenizer.java:261)
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:334)
+	K_Occurrence.main(K_Occurrence.java:60)
+TRACE 300278:
+	java.io.BufferedReader.readLine(BufferedReader.java:362)
+	K_Occurrence.main(K_Occurrence.java:58)
+TRACE 300240:
+	java.lang.Integer.parseInt(Integer.java:499)
+	K_Occurrence.main(K_Occurrence.java:45)
+TRACE 300241:
+	java.util.ArrayList.RangeCheck(ArrayList.java:546)
+	java.util.ArrayList.get(ArrayList.java:322)
+	K_Occurrence.main(K_Occurrence.java:63)
+TRACE 300242:
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:385)
+	java.lang.StringBuilder.append(StringBuilder.java:119)
+	java.lang.StringBuilder.append(StringBuilder.java:115)
+	K_Occurrence.main(K_Occurrence.java:67)
+TRACE 300243:
+	java.lang.System.arraycopy(System.java:Unknown line)
+	java.util.Arrays.copyOfRange(Arrays.java:3210)
+	java.lang.String.<init>(String.java:215)
+	java.io.BufferedReader.readLine(BufferedReader.java:331)
+TRACE 300244:
+	java.util.ArrayList.get(ArrayList.java:324)
+	K_Occurrence.main(K_Occurrence.java:67)
+TRACE 300245:
+	java.util.Arrays.copyOfRange(Arrays.java:3209)
+	java.lang.String.<init>(String.java:215)
+	java.io.BufferedReader.readLine(BufferedReader.java:331)
+	java.io.BufferedReader.readLine(BufferedReader.java:362)
+TRACE 300247:
+	K_Occurrence.main(K_Occurrence.java:45)
+TRACE 300248:
+	K_Occurrence.main(K_Occurrence.java:44)
+TRACE 300249:
+	java.lang.Integer.toString(Integer.java:308)
+	java.lang.Integer.toString(Integer.java:118)
+	java.lang.String.valueOf(String.java:2931)
+	java.lang.Integer.toString(Integer.java:722)
+TRACE 300250:
+	java.lang.Integer.getChars(Integer.java:349)
+	java.lang.Integer.toString(Integer.java:309)
+	java.lang.Integer.toString(Integer.java:118)
+	java.lang.String.valueOf(String.java:2931)
+TRACE 300253:
+	K_Occurrence.main(K_Occurrence.java:58)
+TRACE 300254:
+	K_Occurrence.main(K_Occurrence.java:63)
+TRACE 300255:
+	java.lang.Integer.parseInt(Integer.java:499)
+	K_Occurrence.main(K_Occurrence.java:59)
+TRACE 300261:
+	java.lang.StringBuffer.toString(StringBuffer.java:585)
+	java.io.BufferedReader.readLine(BufferedReader.java:334)
+	java.io.BufferedReader.readLine(BufferedReader.java:362)
+	K_Occurrence.main(K_Occurrence.java:58)
+TRACE 300262:
+	java.lang.String.substring(String.java:1939)
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:335)
+	K_Occurrence.main(K_Occurrence.java:59)
+TRACE 300265:
+	K_Occurrence.main(K_Occurrence.java:59)
+TRACE 300267:
+	java.lang.String.indexOf(String.java:1521)
+	java.util.StringTokenizer.skipDelimiters(StringTokenizer.java:235)
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:324)
+	K_Occurrence.main(K_Occurrence.java:60)
+TRACE 300268:
+	K_Occurrence.main(K_Occurrence.java:67)
+TRACE 300269:
+	java.lang.Integer.getChars(Integer.java:349)
+	java.lang.Integer.toString(Integer.java:309)
+	java.lang.Integer.toString(Integer.java:118)
+	java.lang.String.valueOf(String.java:2931)
+TRACE 300270:
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:514)
+	java.lang.StringBuffer.append(StringBuffer.java:306)
+	java.io.BufferedReader.readLine(BufferedReader.java:333)
+	java.io.BufferedReader.readLine(BufferedReader.java:362)
+TRACE 300272:
+	java.lang.Integer.toString(Integer.java:309)
+	java.lang.Integer.toString(Integer.java:118)
+	java.lang.String.valueOf(String.java:2931)
+	java.lang.Integer.toString(Integer.java:722)
+TRACE 300273:
+	java.util.StringTokenizer.skipDelimiters(StringTokenizer.java:238)
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:324)
+	K_Occurrence.main(K_Occurrence.java:39)
+TRACE 300274:
+	java.io.BufferedReader.fill(BufferedReader.java:105)
+	java.io.BufferedReader.readLine(BufferedReader.java:299)
+	java.io.BufferedReader.readLine(BufferedReader.java:362)
+	K_Occurrence.main(K_Occurrence.java:58)
+TRACE 300275:
+	K_Occurrence.main(K_Occurrence.java:45)
+TRACE 300276:
+	java.lang.String.substring(String.java:1939)
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:335)
+	K_Occurrence.main(K_Occurrence.java:60)
+TRACE 300277:
+	java.util.Arrays.copyOf(Arrays.java:2882)
+	java.lang.AbstractStringBuilder.expandCapacity(AbstractStringBuilder.java:100)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:515)
+	java.lang.StringBuffer.append(StringBuffer.java:306)
+TRACE 300279:
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:334)
+	K_Occurrence.main(K_Occurrence.java:59)
+TRACE 300282:
+	K_Occurrence.main(K_Occurrence.java:72)
+TRACE 300283:
+	java.io.FileInputStream.readBytes(FileInputStream.java:Unknown line)
+	java.io.FileInputStream.read(FileInputStream.java:220)
+	java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+TRACE 300284:
+	java.util.StringTokenizer.scanToken(StringTokenizer.java:261)
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:334)
+	K_Occurrence.main(K_Occurrence.java:45)
+TRACE 300285:
+	java.lang.System.arraycopy(System.java:Unknown line)
+	java.nio.HeapByteBuffer.compact(HeapByteBuffer.java:204)
+	sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:250)
+	sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306)
+TRACE 300287:
+	sun.nio.cs.SingleByteEncoder.encodeArrayLoop(SingleByteEncoder.java:78)
+	sun.nio.cs.SingleByteEncoder.encodeLoop(SingleByteEncoder.java:130)
+	java.nio.charset.CharsetEncoder.encode(CharsetEncoder.java:544)
+	sun.nio.cs.StreamEncoder.implWrite(StreamEncoder.java:252)
+TRACE 300288:
+	sun.nio.cs.SingleByteEncoder.encodeArrayLoop(SingleByteEncoder.java:54)
+	sun.nio.cs.SingleByteEncoder.encodeLoop(SingleByteEncoder.java:130)
+	java.nio.charset.CharsetEncoder.encode(CharsetEncoder.java:544)
+	sun.nio.cs.StreamEncoder.implWrite(StreamEncoder.java:252)
+TRACE 300026:
+	java.util.zip.Inflater.inflateBytes(Inflater.java:Unknown line)
+	java.util.zip.Inflater.inflate(Inflater.java:238)
+	java.util.zip.InflaterInputStream.read(InflaterInputStream.java:135)
+	sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:264)
+TRACE 300120:
+	sun.util.calendar.CalendarSystem.<clinit>(CalendarSystem.java:103)
+	sun.security.util.DerInputBuffer.getTime(DerInputBuffer.java:369)
+	sun.security.util.DerInputBuffer.getUTCTime(DerInputBuffer.java:234)
+	sun.security.util.DerInputStream.getUTCTime(DerInputStream.java:481)
+TRACE 300195:
+	java.math.BigInteger.mulAdd(BigInteger.java:1907)
+	java.math.BigInteger.montReduce(BigInteger.java:1852)
+	java.math.BigInteger.oddModPow(BigInteger.java:1737)
+	java.math.BigInteger.modPow(BigInteger.java:1571)
+TRACE 300196:
+	java.math.BigInteger.multiplyToLen(BigInteger.java:1194)
+	java.math.BigInteger.oddModPow(BigInteger.java:1808)
+	java.math.BigInteger.modPow(BigInteger.java:1571)
+	sun.security.provider.DSA.generateV(DSA.java:374)
+TRACE 300293:
+	java.lang.ProcessEnvironment.environ(ProcessEnvironment.java:Unknown line)
+	java.lang.ProcessEnvironment.<clinit>(ProcessEnvironment.java:53)
+	java.lang.System.getenv(System.java:847)
+	com.apple.java.Application$1.run(Application.java:25)
+TRACE 300197:
+	java.math.BigInteger.squareToLen(BigInteger.java:1274)
+	java.math.BigInteger.oddModPow(BigInteger.java:1821)
+	java.math.BigInteger.modPow(BigInteger.java:1571)
+	sun.security.provider.DSA.generateV(DSA.java:374)
+TRACE 300198:
+	java.lang.String.equals(String.java:1006)
+	java.lang.StringCoding.decode(StringCoding.java:161)
+	java.lang.String.<init>(String.java:443)
+	java.lang.String.<init>(String.java:515)
+TRACE 300063:
+	sun.security.jca.ProviderConfig$5.run(ProviderConfig.java:315)
+	java.security.AccessController.doPrivileged(AccessController.java:Unknown line)
+	sun.security.jca.ProviderConfig.expand(ProviderConfig.java:312)
+	sun.security.jca.ProviderConfig.<init>(ProviderConfig.java:117)
+TRACE 300218:
+	java.io.FilePermission$1.run(FilePermission.java:186)
+	java.io.FilePermission$1.run(FilePermission.java:183)
+	java.security.AccessController.doPrivileged(AccessController.java:Unknown line)
+	java.io.FilePermission.init(FilePermission.java:183)
+TRACE 300298:
+	java.nio.Buffer.position(Buffer.java:215)
+	sun.nio.cs.SingleByteEncoder.encodeArrayLoop(SingleByteEncoder.java:91)
+	sun.nio.cs.SingleByteEncoder.encodeLoop(SingleByteEncoder.java:130)
+	java.nio.charset.CharsetEncoder.encode(CharsetEncoder.java:544)
+TRACE 300299:
+	java.util.IdentityHashMap.keySet(IdentityHashMap.java:935)
+	java.lang.ApplicationShutdownHooks.runHooks(ApplicationShutdownHooks.java:70)
+	java.lang.ApplicationShutdownHooks$1.run(ApplicationShutdownHooks.java:24)
+	java.lang.Shutdown.runHooks(Shutdown.java:79)
+TRACE 300043:
+	java.util.zip.ZipFile.getEntry(ZipFile.java:Unknown line)
+	java.util.zip.ZipFile.getInputStream(ZipFile.java:207)
+	java.util.zip.ZipFile.getInputStream(ZipFile.java:192)
+	java.util.jar.JarFile.getBytes(JarFile.java:368)
+TRACE 300097:
+	java.lang.String.toLowerCase(String.java:2417)
+	java.security.Provider.parseLegacyPut(Provider.java:576)
+	java.security.Provider.ensureLegacyParsed(Provider.java:537)
+	java.security.Provider.getService(Provider.java:676)
+TRACE 300142:
+	sun.security.x509.OIDMap.addInternal(OIDMap.java:157)
+	sun.security.x509.OIDMap.<clinit>(OIDMap.java:128)
+	sun.security.x509.CertificateExtensions.parseExtension(CertificateExtensions.java:78)
+	sun.security.x509.CertificateExtensions.init(CertificateExtensions.java:69)
+TRACE 300203:
+	java.util.HashMap.newEntryIterator(HashMap.java:846)
+	java.util.HashMap$EntrySet.iterator(HashMap.java:950)
+	sun.security.util.SignatureFileVerifier.processImpl(SignatureFileVerifier.java:214)
+	sun.security.util.SignatureFileVerifier.process(SignatureFileVerifier.java:176)
+TRACE 300204:
+	sun.security.provider.SHA.implCompress(SHA.java:105)
+	sun.security.provider.DigestBase.engineUpdate(DigestBase.java:122)
+	java.security.MessageDigest$Delegate.engineUpdate(MessageDigest.java:538)
+	java.security.MessageDigest.update(MessageDigest.java:283)
+TRACE 300027:
+	java.util.zip.Inflater.init(Inflater.java:Unknown line)
+	java.util.zip.Inflater.<init>(Inflater.java:83)
+	java.util.zip.ZipFile.getInflater(ZipFile.java:278)
+	java.util.zip.ZipFile.getInputStream(ZipFile.java:224)
+TRACE 300014:
+	java.util.jar.JarFile.getEntry(JarFile.java:211)
+	java.util.jar.JarFile.getJarEntry(JarFile.java:192)
+	java.util.jar.JarFile.getManEntry(JarFile.java:439)
+	java.util.jar.JarFile.hasClassPathAttribute(JarFile.java:469)
+TRACE 300155:
+	java.lang.String.intern(String.java:Unknown line)
+	java.util.jar.Attributes$Name.<init>(Attributes.java:449)
+	java.util.jar.Attributes.putValue(Attributes.java:151)
+	java.util.jar.Attributes.read(Attributes.java:404)
+TRACE 300009:
+	java.util.zip.ZipFile.open(ZipFile.java:Unknown line)
+	java.util.zip.ZipFile.<init>(ZipFile.java:127)
+	java.util.jar.JarFile.<init>(JarFile.java:136)
+	java.util.jar.JarFile.<init>(JarFile.java:73)
+TRACE 300179:
+	java.util.regex.Pattern.compile(Pattern.java:1477)
+	java.util.regex.Pattern.<init>(Pattern.java:1133)
+	java.util.regex.Pattern.compile(Pattern.java:823)
+	java.lang.String.split(String.java:2292)
+TRACE 300229:
+	K_Occurrence.main(K_Occurrence.java:14)
+TRACE 300231:
+	java.util.ArrayList.add(ArrayList.java:373)
+	K_Occurrence.main(K_Occurrence.java:18)
+TRACE 300232:
+	K_Occurrence.main(K_Occurrence.java:18)
+TRACE 300080:
+	java.security.cert.CertificateFactory.getInstance(CertificateFactory.java:148)
+	sun.security.pkcs.PKCS7.parseSignedData(PKCS7.java:244)
+	sun.security.pkcs.PKCS7.parse(PKCS7.java:141)
+	sun.security.pkcs.PKCS7.parse(PKCS7.java:110)
+TRACE 300235:
+	K_Occurrence.main(K_Occurrence.java:64)
+TRACE 300236:
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:333)
+	K_Occurrence.main(K_Occurrence.java:60)
+TRACE 300237:
+	java.lang.CharacterDataLatin1.digit(CharacterDataLatin1.java:179)
+	java.lang.Character.digit(Character.java:4535)
+	java.lang.Character.digit(Character.java:4494)
+	java.lang.Integer.parseInt(Integer.java:447)
+TRACE 300238:
+	java.lang.Character.digit(Character.java:4494)
+	java.lang.Integer.parseInt(Integer.java:447)
+	java.lang.Integer.parseInt(Integer.java:499)
+	K_Occurrence.main(K_Occurrence.java:59)
+TRACE 300239:
+	java.util.StringTokenizer.nextToken(StringTokenizer.java:324)
+	K_Occurrence.main(K_Occurrence.java:45)
+CPU SAMPLES BEGIN (total = 424) Thu Feb  6 19:09:06 2014
+rank   self  accum   count trace method
+   1 74.06% 74.06%     314 300286 java.io.FileOutputStream.writeBytes
+   2  1.65% 75.71%       7 300246 java.lang.Object.getClass
+   3  0.94% 76.65%       4 300230 java.util.ArrayList.<init>
+   4  0.94% 77.59%       4 300264 java.lang.String.<init>
+   5  0.71% 78.30%       3 300257 K_Occurrence.main
+   6  0.71% 79.01%       3 300259 java.lang.String.indexOf
+   7  0.71% 79.72%       3 300263 java.lang.System.arraycopy
+   8  0.71% 80.42%       3 300258 java.util.StringTokenizer.setMaxDelimCodePoint
+   9  0.47% 80.90%       2 300280 java.lang.Integer.parseInt
+  10  0.47% 81.37%       2 300281 java.util.StringTokenizer.skipDelimiters
+  11  0.47% 81.84%       2 300260 java.nio.Buffer.position
+  12  0.47% 82.31%       2 300234 K_Occurrence.main
+  13  0.47% 82.78%       2 300256 java.lang.Integer.toString
+  14  0.47% 83.25%       2 300271 K_Occurrence.main
+  15  0.47% 83.73%       2 300266 java.util.Arrays.copyOf
+  16  0.47% 84.20%       2 300251 K_Occurrence.main
+  17  0.47% 84.67%       2 300252 java.util.StringTokenizer.scanToken
+  18  0.47% 85.14%       2 300278 java.io.BufferedReader.readLine
+  19  0.24% 85.38%       1 300240 java.lang.Integer.parseInt
+  20  0.24% 85.61%       1 300241 java.util.ArrayList.RangeCheck
+  21  0.24% 85.85%       1 300242 java.lang.AbstractStringBuilder.append
+  22  0.24% 86.08%       1 300243 java.lang.System.arraycopy
+  23  0.24% 86.32%       1 300244 java.util.ArrayList.get
+  24  0.24% 86.56%       1 300245 java.util.Arrays.copyOfRange
+  25  0.24% 86.79%       1 300247 K_Occurrence.main
+  26  0.24% 87.03%       1 300248 K_Occurrence.main
+  27  0.24% 87.26%       1 300249 java.lang.Integer.toString
+  28  0.24% 87.50%       1 300250 java.lang.Integer.getChars
+  29  0.24% 87.74%       1 300253 K_Occurrence.main
+  30  0.24% 87.97%       1 300254 K_Occurrence.main
+  31  0.24% 88.21%       1 300255 java.lang.Integer.parseInt
+  32  0.24% 88.44%       1 300261 java.lang.StringBuffer.toString
+  33  0.24% 88.68%       1 300262 java.lang.String.substring
+  34  0.24% 88.92%       1 300265 K_Occurrence.main
+  35  0.24% 89.15%       1 300267 java.lang.String.indexOf
+  36  0.24% 89.39%       1 300268 K_Occurrence.main
+  37  0.24% 89.62%       1 300269 java.lang.Integer.getChars
+  38  0.24% 89.86%       1 300270 java.lang.AbstractStringBuilder.append
+  39  0.24% 90.09%       1 300272 java.lang.Integer.toString
+  40  0.24% 90.33%       1 300273 java.util.StringTokenizer.skipDelimiters
+  41  0.24% 90.57%       1 300274 java.io.BufferedReader.fill
+  42  0.24% 90.80%       1 300275 K_Occurrence.main
+  43  0.24% 91.04%       1 300276 java.lang.String.substring
+  44  0.24% 91.27%       1 300277 java.util.Arrays.copyOf
+  45  0.24% 91.51%       1 300279 java.util.StringTokenizer.nextToken
+  46  0.24% 91.75%       1 300282 K_Occurrence.main
+  47  0.24% 91.98%       1 300283 java.io.FileInputStream.readBytes
+  48  0.24% 92.22%       1 300284 java.util.StringTokenizer.scanToken
+  49  0.24% 92.45%       1 300285 java.lang.System.arraycopy
+  50  0.24% 92.69%       1 300287 sun.nio.cs.SingleByteEncoder.encodeArrayLoop
+  51  0.24% 92.92%       1 300288 sun.nio.cs.SingleByteEncoder.encodeArrayLoop
+  52  0.24% 93.16%       1 300026 java.util.zip.Inflater.inflateBytes
+  53  0.24% 93.40%       1 300120 sun.util.calendar.CalendarSystem.<clinit>
+  54  0.24% 93.63%       1 300195 java.math.BigInteger.mulAdd
+  55  0.24% 93.87%       1 300196 java.math.BigInteger.multiplyToLen
+  56  0.24% 94.10%       1 300293 java.lang.ProcessEnvironment.environ
+  57  0.24% 94.34%       1 300197 java.math.BigInteger.squareToLen
+  58  0.24% 94.58%       1 300198 java.lang.String.equals
+  59  0.24% 94.81%       1 300063 sun.security.jca.ProviderConfig$5.run
+  60  0.24% 95.05%       1 300218 java.io.FilePermission$1.run
+  61  0.24% 95.28%       1 300298 java.nio.Buffer.position
+  62  0.24% 95.52%       1 300299 java.util.IdentityHashMap.keySet
+  63  0.24% 95.75%       1 300043 java.util.zip.ZipFile.getEntry
+  64  0.24% 95.99%       1 300097 java.lang.String.toLowerCase
+  65  0.24% 96.23%       1 300142 sun.security.x509.OIDMap.addInternal
+  66  0.24% 96.46%       1 300203 java.util.HashMap.newEntryIterator
+  67  0.24% 96.70%       1 300204 sun.security.provider.SHA.implCompress
+  68  0.24% 96.93%       1 300027 java.util.zip.Inflater.init
+  69  0.24% 97.17%       1 300014 java.util.jar.JarFile.getEntry
+  70  0.24% 97.41%       1 300155 java.lang.String.intern
+  71  0.24% 97.64%       1 300009 java.util.zip.ZipFile.open
+  72  0.24% 97.88%       1 300179 java.util.regex.Pattern.compile
+  73  0.24% 98.11%       1 300229 K_Occurrence.main
+  74  0.24% 98.35%       1 300231 java.util.ArrayList.add
+  75  0.24% 98.58%       1 300232 K_Occurrence.main
+  76  0.24% 98.82%       1 300080 java.security.cert.CertificateFactory.getInstance
+  77  0.24% 99.06%       1 300235 K_Occurrence.main
+  78  0.24% 99.29%       1 300236 java.util.StringTokenizer.nextToken
+  79  0.24% 99.53%       1 300237 java.lang.CharacterDataLatin1.digit
+  80  0.24% 99.76%       1 300238 java.lang.Character.digit
+  81  0.24% 100.00%       1 300239 java.util.StringTokenizer.nextToken
+CPU SAMPLES END
