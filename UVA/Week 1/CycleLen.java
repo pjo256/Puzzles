@@ -1,12 +1,14 @@
+/**
+ * UVA 100
+ * http://vjudge.net/vjudge/contest/view.action?cid=39861#problem/A
+ */
+
 import java.io.*;
 import java.util.*;
 import java.lang.Math;
 
 public class CycleLen {
-	
-	
 
-	
 	public static void main(String[] args) throws Exception {
 	
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));

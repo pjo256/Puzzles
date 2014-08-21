@@ -1,6 +1,10 @@
+/**
+ * UVA 498
+ * http://vjudge.net/vjudge/contest/view.action?cid=39861#problem/B
+ */
+
 import java.io.*;
 import java.util.*;
-
 
 public class Horner {
 	public static void main(String[] args) throws Exception {

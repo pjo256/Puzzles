@@ -1,6 +1,12 @@
+/**
+ * UVA 787
+ * http://vjudge.net/vjudge/contest/view.action?cid=40131#problem/A
+ */
+
 import java.io.*;
 import java.util.*;
 import java.math.BigInteger;
+
 public class MaxSubSequence {
 	
 	

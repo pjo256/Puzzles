@@ -1,3 +1,8 @@
+/**
+ * UVA 11995
+ * http://vjudge.net/vjudge/contest/view.action?cid=39861#problem/D
+ */
+
 import java.io.*;
 import java.util.*;
 

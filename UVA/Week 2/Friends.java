@@ -1,13 +1,18 @@
+/**
+ * UVA 11503
+ * http://vjudge.net/vjudge/contest/view.action?cid=40131#problem/C
+ */
+
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Friends {
 
-	private class UnionFindSet {
-		int numTreelets;
+	private static class UnionFindSet {
+		private int numTreelets;
 		
-		int[] label;
-		int[] size;
+		private int[] label;
+		private int[] size;
 
 		public UnionFindSet(int numTreelets) {
 			this.numTreelets = numTreelets;
@@ -16,7 +21,7 @@ public class Main {
 			this.label = new int[numTreelets];
 
 			for (int ind = 0; ind < numTreelets; ind ++) {
-				size[ind] = ind;
+				size[ind] = 1;
 				label[ind] = ind;
 			}
 		}
@@ -24,6 +29,18 @@ public class Main {
 
 		public boolean disjoint(int node_1, int node_2) {
 			return find(node_1) != find(node_2);
+		}
+
+		public int sizeOf(int node_1, int node_2) {
+			
+			int parent_1 = find(node_1);
+			int parent_2 = find(node_2);
+
+			if (parent_1 != parent_2) {
+				return size[parent_1] + size[parent_2];
+			} else {
+				return size[parent_1];
+			}
 		}
 
 		public void union(int node_1, int node_2) {
@@ -66,7 +83,7 @@ public class Main {
 		int numTests = Integer.parseInt(input.readLine());
 		int numFriendShips;
 
-		Main.UnionFindSet friendships;
+		UnionFindSet friendships;
 		HashMap<String, Integer> nameToIndex = new HashMap<String, Integer>();
 		
 		int globalIndex = 0;
@@ -80,12 +97,13 @@ public class Main {
 		Integer second_ind;
 
 		while ( (line = input.readLine()) != null) {
-			numFriendShips = Integer.parseInt(input.readLine());
+			numFriendShips = Integer.parseInt(line);
 			globalIndex = 0;
-			friendships = new Main().new UnionFindSet(numFriendShips / 2);
+			friendships = new UnionFindSet(2 * numFriendShips);
 			nameToIndex.clear();
-			while (numFriendShips > 0 && (line = input.readLine()) != null) {
+			while (numFriendShips > 0) {
 
+				line = input.readLine();
 				st = new StringTokenizer(line);
 				
 				first = st.nextToken();
@@ -105,11 +123,9 @@ public class Main {
 					globalIndex++;
 				}
 						
-				if (friendships.disjoint(first_ind, second_ind)) {
-					sumFriends = friendships.size[first_ind] + friendships.size[second_ind];
-					friendships.union(first_ind, second_ind);
-					sb.append(sumFriends + "\n");			
-				}
+				sumFriends = friendships.sizeOf(first_ind, second_ind);
+				friendships.union(first_ind, second_ind);
+				sb.append(sumFriends + "\n");			
 
 				numFriendShips --;
 			}	
