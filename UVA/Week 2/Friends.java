@@ -1,14 +1,9 @@
-/**
- * UVA 11503
- * http://vjudge.net/vjudge/contest/view.action?cid=40131#problem/C
- */
-
 import java.io.*;
 import java.util.*;
 
 public class Friends {
 
-	private static class UnionFindSet {
+	private class UnionFindSet {
 		private int numTreelets;
 		
 		private int[] label;
@@ -83,7 +78,7 @@ public class Friends {
 		int numTests = Integer.parseInt(input.readLine());
 		int numFriendShips;
 
-		UnionFindSet friendships;
+		Main.UnionFindSet friendships;
 		HashMap<String, Integer> nameToIndex = new HashMap<String, Integer>();
 		
 		int globalIndex = 0;
@@ -99,7 +94,7 @@ public class Friends {
 		while ( (line = input.readLine()) != null) {
 			numFriendShips = Integer.parseInt(line);
 			globalIndex = 0;
-			friendships = new UnionFindSet(2 * numFriendShips);
+			friendships = new Main().new UnionFindSet(2 * numFriendShips);
 			nameToIndex.clear();
 			while (numFriendShips > 0) {
 
